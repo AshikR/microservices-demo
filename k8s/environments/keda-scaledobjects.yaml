@@ -1,0 +1,54 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: posts-scaler
+  namespace: prod-env
+spec:
+  scaleTargetRef:
+    name: posts
+  minReplicaCount: 1
+  maxReplicaCount: 5
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://infrastructure-monitoring-prometheus.infrastructure-mesh.svc.cluster.local:9090
+      query: sum(rate(http_requests_total{service="posts"}[1m]))
+      threshold: "10"
+
+
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: comments-scaler
+  namespace: prod-env
+spec:
+  scaleTargetRef:
+    name: comments
+  minReplicaCount: 1
+  maxReplicaCount: 5
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://infrastructure-monitoring-prometheus.infrastructure-mesh.svc.cluster.local:9090
+      query: sum(rate(http_requests_total{service="comments"}[1m]))
+      threshold: "10"
+
+
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: query-scaler
+  namespace: prod-env
+spec:
+  scaleTargetRef:
+    name: query
+  minReplicaCount: 1
+  maxReplicaCount: 5
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://infrastructure-monitoring-prometheus.infrastructure-mesh.svc.cluster.local:9090
+      query: sum(rate(http_requests_total{service="query"}[1m]))
+      threshold: "10"

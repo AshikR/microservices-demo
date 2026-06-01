@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: posts-sa
+
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: comments-sa
+
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: query-sa
+
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: configmap-reader
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: posts-configmap-reader
+subjects:
+  - kind: ServiceAccount
+    name: posts-sa
+roleRef:
+  kind: Role
+  name: configmap-reader
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: comments-configmap-reader
+subjects:
+  - kind: ServiceAccount
+    name: comments-sa
+roleRef:
+  kind: Role
+  name: configmap-reader
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: query-configmap-reader
+subjects:
+  - kind: ServiceAccount
+    name: query-sa
+roleRef:
+  kind: Role
+  name: configmap-reader
+  apiGroup: rbac.authorization.k8s.io

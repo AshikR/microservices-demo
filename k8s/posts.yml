@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts
+  template:
+    metadata:
+      labels:
+        app: posts
+    spec:
+      serviceAccountName: posts-sa
+      containers:
+        - name: posts
+          image: 657830185735.dkr.ecr.us-east-1.amazonaws.com/microservices-demo-posts:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8001
+          env:
+            - name: CORS_ORIGIN
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: CORS_ORIGIN
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts
+spec:
+  selector:
+    app: posts
+  ports:
+    - port: 8001
+      targetPort: 8001
+  type: ClusterIP

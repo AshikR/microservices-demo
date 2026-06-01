@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: infrastructure-alb-controller
+  namespace: argocd
+
+spec:
+  project: microservices-demo-governance
+
+  source:
+    repoURL: https://aws.github.io/eks-charts
+    chart: aws-load-balancer-controller
+    targetRevision: 1.13.0
+
+    helm:
+      values: |
+        clusterName: microservices-demo
+
+        region: us-east-1
+
+        vpcId: vpc-03bc5076b6bbe33fe
+
+        serviceAccount:
+          create: true
+          name: aws-load-balancer-controller
+
+          annotations:
+            eks.amazonaws.com/role-arn: arn:aws:iam::657830185735:role/microservices-demo-alb-controller-role
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

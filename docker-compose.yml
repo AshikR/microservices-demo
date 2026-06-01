@@ -1,0 +1,45 @@
+services:
+  posts:
+    build: ./posts
+    ports:
+      - "8001:8001"
+    depends_on:
+      - event-bus
+
+  comments:
+    build: ./comments
+    ports:
+      - "8002:8002"
+    depends_on:
+      - event-bus
+
+  query:
+    build: ./query
+    ports:
+      - "8003:8003"
+    depends_on:
+      - event-bus
+      - posts
+      - comments
+
+  moderation:
+    build: ./moderation
+    ports:
+      - "8004:8004"
+    depends_on:
+      - event-bus
+
+  event-bus:
+    build: ./event-bus
+    ports:
+      - "8005:8005"
+
+  client:
+    build:
+      context: ./client
+      args:
+        - REACT_APP_POSTS_SERVICE_URL=http://localhost:8080/posts
+        - REACT_APP_COMMENTS_SERVICE_URL=http://localhost:8080/comments
+        - REACT_APP_QUERY_SERVICE_URL=http://localhost:8080/query
+    ports:
+      - "3000:80"

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moderation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moderation
+  template:
+    metadata:
+      labels:
+        app: moderation
+    spec:
+      containers:
+        - name: moderation
+          image: 657830185735.dkr.ecr.us-east-1.amazonaws.com/microservices-demo-moderation:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8004
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: moderation
+spec:
+  selector:
+    app: moderation
+  ports:
+    - port: 8004
+      targetPort: 8004
+  type: ClusterIP

@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
+  namespace: argocd
+data:
+  template.app-sync-failed: |
+    email:
+      subject: "ArgoCD Sync Failed - {{.app.metadata.name}}"
+      body: |
+        Application {{.app.metadata.name}} failed to sync.
+        Dashboard: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}
+        Status: {{.app.status.sync.status}}
+        Error: {{.app.status.operationState.message}}
+    slack:
+      attachments:
+        - title: "Sync Failed - {{.app.metadata.name}}"
+          title_link: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}"
+          color: "#E01E5A"
+          text: "App *{{.app.metadata.name}}* failed in namespace `{{.app.spec.destination.namespace}}`."
+  trigger.on-sync-failed: |
+    - description: Sync failure alert
+      when: app.status.operationState.phase in ['Failed', 'Error']
+      send: [app-sync-failed]
+  service.email: |
+    host: smtp.gmail.com
+    port: 587
+    from: $email-from
+    username: $smtp-username
+    password: $smtp-password
+  service.slack: |
+    token: $slack-token
+
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argocd-notifications-secret
+  namespace: argocd
+type: Opaque
+stringData:
+  email-from: ${{ secrets.ALERT_EMAIL }}
+  smtp-username: ${{ secrets.SMTP_USERNAME }}
+  smtp-password: ${{ secrets.SMTP_PASSWORD }}
+  slack-token: ${{ secrets.SLACK_TOKEN }}

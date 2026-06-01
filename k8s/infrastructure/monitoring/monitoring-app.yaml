@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: infrastructure-monitoring
+  namespace: argocd
+spec:
+  project: microservices-demo-governance
+  source:
+    repoURL: 'https://prometheus-community.github.io/helm-charts'
+    chart: kube-prometheus-stack 
+    targetRevision: 51.0.0
+    helm:
+      values: 
+        grafana:
+          adminPassword: "secure-monitoring-pass-word"
+          persistence:
+            enabled: false 
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: infrastructure-mesh
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
