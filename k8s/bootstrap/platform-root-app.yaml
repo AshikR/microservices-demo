@@ -1,17 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
+
 metadata:
-  name: infrastructure-keda
+  name: platform-root
   namespace: argocd
+
 spec:
   project: microservices-demo-governance
+
   source:
-    repoURL: 'https://kedacore.github.io/charts' 
-    chart: keda
-    targetRevision: 2.12.0
+    repoURL: https://github.com/AshikR/microservices-demo.git
+    targetRevision: dev
+    path: k8s/infrastructure
+
   destination:
     server: https://kubernetes.default.svc
-    namespace: infrastructure-keda
+    namespace: argocd
+
   syncPolicy:
     automated:
       prune: true
