@@ -33,13 +33,4 @@ jobs:
             ./${{ matrix.service }}
           docker push $ECR_REGISTRY/microservices-demo-${{ matrix.service }}:latest
 
-      - name: Update kubeconfig
-        run: |
-          aws eks update-kubeconfig \
-           --name microservices-demo \
-           --region us-east-1
 
-      - name: Restart deployment
-        run: |
-          kubectl rollout restart deployment/${{ matrix.service }} \
-            --namespace microservices-demo
