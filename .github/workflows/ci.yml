@@ -42,7 +42,7 @@ jobs:
   build-and-scan:
     name: Build and Scan Images
     runs-on: ubuntu-latest
-    needs: [trivy-fs]
+    needs: [sonarcloud, trivy-fs]
     strategy:
       matrix:
         service: [posts, comments, query, event-bus, moderation, client]
