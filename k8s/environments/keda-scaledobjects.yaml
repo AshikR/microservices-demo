@@ -2,7 +2,7 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: posts-scaler
-  namespace: prod-env
+  namespace: microservices-demo
 spec:
   scaleTargetRef:
     name: posts
@@ -21,7 +21,7 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: comments-scaler
-  namespace: prod-env
+  namespace: microservices-demo
 spec:
   scaleTargetRef:
     name: comments
@@ -40,7 +40,7 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: query-scaler
-  namespace: prod-env
+  namespace: microservices-demo
 spec:
   scaleTargetRef:
     name: query

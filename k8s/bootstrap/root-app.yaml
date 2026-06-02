@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://github.com/AshikR/microservices-demo.git
     targetRevision: dev
-    path: k8s/infrastructure
+    path: k8s
 
   destination:
     server: https://kubernetes.default.svc
