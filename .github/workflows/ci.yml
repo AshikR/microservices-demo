@@ -15,15 +15,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.organization=${{ secrets.SONAR_ORG }}
-            -Dsonar.projectKey=AshikR_microservices-demo
+     - name: SonarCloud Scan
+         uses: SonarSource/sonarqube-scan-action@v5
+           env:
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+         with:
+           args: >
+             -Dsonar.organization=microservices-platform
+             -Dsonar.projectKey=microservices-platform_microservices-demo
 
   trivy-fs:
     name: Trivy Filesystem Scan
