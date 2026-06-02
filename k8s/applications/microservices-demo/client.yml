@@ -25,12 +25,9 @@ spec:
             limits:
               memory: "256Mi"
               cpu: "200m"
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: 1000
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop: [ALL]
+          
+
+
 ---
 apiVersion: v1
 kind: Service
