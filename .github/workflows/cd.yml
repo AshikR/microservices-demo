@@ -1,7 +1,7 @@
 name: CD Pipeline
 on:
   push:
-    branches: [main]
+    branches: [dev]
 permissions:
   id-token: write
   contents: read
@@ -42,4 +42,4 @@ jobs:
       - name: Restart deployment
         run: |
           kubectl rollout restart deployment/${{ matrix.service }} \
-            --namespace prod-env
+            --namespace microservices-demo
