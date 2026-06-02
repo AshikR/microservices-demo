@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - platform
   - applications
-  - environments
+  
