@@ -25,6 +25,7 @@ spec:
             limits:
               memory: "128Mi"
               cpu: "200m"
+
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
