@@ -3,5 +3,4 @@ kind: Kustomization
 
 resources:
   - alb-controller/alb-controller-app.yaml
-  - keda/keda-app.yaml
   - monitoring/monitoring-app.yaml
