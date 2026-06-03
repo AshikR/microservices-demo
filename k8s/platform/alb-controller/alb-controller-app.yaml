@@ -21,8 +21,6 @@ spec:
 
         region: us-east-1
 
-        vpcId: vpc-03bc5076b6bbe33fe
-
         serviceAccount:
           create: true
           name: aws-load-balancer-controller

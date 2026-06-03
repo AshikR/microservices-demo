@@ -5,6 +5,8 @@ resource "aws_vpc" "main" {
 
   tags = {
     Name = "microservices-demo-vpc"
+
+
   }
 }
 
@@ -27,6 +29,10 @@ resource "aws_subnet" "public_1" {
 
   tags = {
     Name = "public-subnet-1"
+
+
+    "kubernetes.io/role/elb"                   = "1"
+    "kubernetes.io/cluster/microservices-demo" = "shared"
   }
 }
 
@@ -40,6 +46,10 @@ resource "aws_subnet" "public_2" {
 
   tags = {
     Name = "public-subnet-2"
+
+
+    "kubernetes.io/role/elb"                   = "1"
+    "kubernetes.io/cluster/microservices-demo" = "shared"
   }
 }
 
