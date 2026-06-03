@@ -3,4 +3,4 @@ kind: Kustomization
 
 resources:
   - alb-controller/alb-controller-app.yaml
-  - monitoring/monitoring-app.yaml
+  - monitoring

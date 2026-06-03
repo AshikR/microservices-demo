@@ -1,23 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
-
 metadata:
-  name: microservices-demo
+  name: infrastructure-metrics-server
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "10"
+    argocd.argoproj.io/sync-wave: "0"
 
 spec:
   project: microservices-demo-governance
 
   source:
-    repoURL: https://github.com/AshikR/microservices-demo.git
-    targetRevision: dev
-    path: k8s/applications/microservices-demo
+    repoURL: https://kubernetes-sigs.github.io/metrics-server/
+    chart: metrics-server
+    targetRevision: 3.13.0
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: microservices-demo
+    namespace: kube-system
 
   syncPolicy:
     automated:
