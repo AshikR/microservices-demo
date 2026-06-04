@@ -11,12 +11,12 @@ app.use(cors({
   origin: process.env.CORS_ORIGIN || 'http://localhost:3000'
 }));
 
-app.get('/posts/:id/comments', (req, res) => {
+app.get('/comments/posts/:id/comments', (req, res) => {
   const postId = req.params.id;
   res.status(200).json(DB[postId] || []).end();
 });
 
-app.post('/posts/:id/comments', async (req, res) => {
+app.post('/comments/posts/:id/comments', async (req, res) => {
   const id = randomBytes(4).toString('hex');
   const { content } = req.body;
   const postId = req.params.id;
