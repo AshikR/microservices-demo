@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 });
 
 // Create a post
-app.post("/post/create", async (req, res) => {
+app.post("/posts/post/create", async (req, res) => {
   const id = randomBytes(4).toString("hex");
   const { title } = req.body;
 

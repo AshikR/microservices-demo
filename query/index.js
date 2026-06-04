@@ -53,7 +53,7 @@ app.post("/events", (req, res) => {
   return res.status(201).send({});
 });
 
-app.get("/posts", (req, res) => {
+app.get("/query/posts", (req, res) => {
   res.status(200).json({ data: DB });
 });
 
