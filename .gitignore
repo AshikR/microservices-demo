@@ -1,45 +1,22 @@
-# Node
 node_modules/
-
-# Environment
 .env
-
-# Build output
 coverage/
 dist/
 build/
-
-# Logs
 *.log
-
-# OS
 .DS_Store
-
-# Editors
 .vscode/
 .idea/
-
-# Terraform
 **/.terraform/
 **/.terragrunt-cache/
-
-# Terraform state
 **/*.tfstate
 **/*.tfstate.*
-
-# Terraform variables
 **/*.tfvars
 **/*.tfvars.json
-
-# Terraform override files
 override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
-
-# AWS local config folders (optional)
 .aws/
-
-# Keep lock file committed (recommended)
-# !.terraform.lock.hcl
+.terraform.lock.hcl
 
